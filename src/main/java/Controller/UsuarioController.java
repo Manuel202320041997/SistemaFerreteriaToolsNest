@@ -1,5 +1,3 @@
-QUE SE VEA MRD
-
 package Controller;
 
 import java.util.List;
