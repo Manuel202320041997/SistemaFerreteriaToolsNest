@@ -14,17 +14,14 @@ public class ClienteController {
         clienteDaoImpl = new ClienteDaoImpl();
     }
     
-    public List<Cliente> listarCliente(){
-    	List<Cliente> listaCompleta = clienteDaoImpl.listarCliente();
-    	List<Cliente> listaFiltrada = new ArrayList<>();
-    	
-    	for (Cliente cliente : listaCompleta) {
-            if (cliente.getEstado()) {//TRAE A TODOS LOS OBJETOS O FILAS DE DATOS QUE HAY EN LISTA COMPLETA, PERO SOLO ADMITE LOS QUE TIENEN DE ESTADO (TRUE)
-                listaFiltrada.add(cliente);
-            }
-        }
-    	return listaFiltrada;
+    public List<Cliente> listarCliente() {
+        List<Cliente> listarCliente = null;
+        listarCliente = clienteDaoImpl.listarCliente();
+        return listarCliente;
     }
+
+    
+    
     
     public void agregarCliente(Cliente cliente) {
     	try {
