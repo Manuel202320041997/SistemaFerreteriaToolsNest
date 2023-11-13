@@ -54,18 +54,7 @@ public class InventarioDaoImpl implements InventarioDao {
         return listaInventario;
     }
 
-    public void agregarProducto(Inventario producto) {
-        // Implementa la lógica para agregar un producto a la base de datos
-    }
-
-    public void eliminarProducto(int idProducto) {
-        // Implementa la lógica para eliminar un producto de la base de datos
-    }
-
-    public void editarProducto(int idProducto) {
-        // Implementa la lógica para editar un producto en la base de datos
-    }
-
+    
     public Inventario buscarProductoPorId(int idProducto) {
         // Implementa la lógica para buscar un producto por su ID en la base de datos
         return null;
