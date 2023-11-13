@@ -6,15 +6,15 @@ import DaoImpl.InventarioDaoImpl;
 import Model.Inventario;
 
 public class InventarioController {
-    private InventarioDao inventarioDao = null;
+    private InventarioDaoImpl inventarioDaoImpl = null;
 
     public InventarioController() {
-        inventarioDao = new InventarioDaoImpl();
+        inventarioDaoImpl = new InventarioDaoImpl();
     }
 
-    public List<Inventario> listarInventario() {
+    public List<Inventario> listaInventario() {
         List<Inventario> listaInventario = null;
-        listaInventario = inventarioDao.listarInventario();
+        listaInventario = inventarioDaoImpl.listarInventario();
         return listaInventario;
     }
 
