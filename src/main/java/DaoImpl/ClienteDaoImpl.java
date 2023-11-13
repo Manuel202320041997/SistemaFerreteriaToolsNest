@@ -32,10 +32,10 @@ public class ClienteDaoImpl implements ClienteDao {
 			while(resultSet.next()) {
 				/*Obtenemos datos de la base de datos y los almacenamos en variables*/
 				int id = resultSet.getInt("id");
-				String dni = resultSet.getString("dni");
-				String nombre = resultSet.getString("nombre");
+				int dni = resultSet.getInt("dni");
+				String nombre = resultSet.getString("nombres");
 				String correo = resultSet.getString("correo");
-				int telefono = resultSet.getInt("telefono");				
+				String telefono = resultSet.getString("telefono");				
 				Boolean estado = resultSet.getBoolean("estado");
 				
 				Cliente cliente = new Cliente();
@@ -59,13 +59,13 @@ public class ClienteDaoImpl implements ClienteDao {
 	@Override
 	public void agregarCliente(Cliente cliente) {
 		try {
-	        String consulta = "INSERT INTO cliente (dni, nombre, correo, telefono) VALUES (?, ?, ?, ?)";
+	        String consulta = "INSERT INTO cliente (dni, nombres, correo, telefono) VALUES (?, ?, ?, ?)";
 	        PreparedStatement statement = conexion.prepareStatement(consulta);
 	        
-	        statement.setString(1, cliente.getDni());
+	        statement.setInt(1, cliente.getDni());
 	        statement.setString(2, cliente.getNombre());
 	        statement.setString(3, cliente.getCorreo());
-	        statement.setInt(4, cliente.getTelefono());	        
+	        statement.setString(4, cliente.getTelefono());	        
 	        statement.executeUpdate();
 	        
 	    } catch (SQLException e) {
@@ -89,16 +89,17 @@ public class ClienteDaoImpl implements ClienteDao {
 	}
 
 	@Override
+	
 	public String buscarClientePorId(int idCliente) {
 		try {
-			String consulta = "SELECT nombre FROM cliente WHERE id = ?";
+			String consulta = "SELECT nombres FROM cliente WHERE id = ?";
 			statement = conexion.prepareStatement(consulta);
 			statement.setInt(1, idCliente); // Establece el valor del parámetro
 			ResultSet resultSet = statement.executeQuery();
 	
 			if (resultSet.next()) {
 				// Obtenemos el nombre de la base de datos
-				String nombre = resultSet.getString("nombre");
+				String nombre = resultSet.getString("nombres");
 				return nombre; // Retorna el nombre del cliente
 			}
 		} catch (SQLException e) {
@@ -113,7 +114,7 @@ public class ClienteDaoImpl implements ClienteDao {
 		int idCliente = -1; // Valor predeterminado en caso de no encontrar el producto
 
 		try {
-			String consulta = "SELECT id FROM cliente WHERE nombre = ?";
+			String consulta = "SELECT id FROM cliente WHERE nombres = ?";
 			PreparedStatement statement = conexion.prepareStatement(consulta);
 			statement.setString(1, nombreCliente);
 			ResultSet resultSet = statement.executeQuery();
