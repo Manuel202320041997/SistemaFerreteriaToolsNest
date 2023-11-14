@@ -89,7 +89,6 @@ public class ClienteDaoImpl implements ClienteDao {
 	}
 
 	@Override
-	
 	public String buscarClientePorId(int idCliente) {
 		try {
 			String consulta = "SELECT nombres FROM cliente WHERE id = ?";
