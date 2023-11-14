@@ -10,7 +10,9 @@ public interface UsuarioDao {
 	
     public void eliminarUsuario(int idUsuario);
     
-    public void editarUsuario(int idUsuario);
+    public void editarUsuario(Usuario usuario);
     
-    public Usuario buscarUsuarioPorId(int idUsuario);
+    public Usuario buscarUsuarioPorDni(int dniUsuario);
+    
+    public boolean verificarSiExisteDni(int dniUsuario);
 }
