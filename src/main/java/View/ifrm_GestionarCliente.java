@@ -13,8 +13,11 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
-
+import javax.swing.plaf.basic.BasicBorders;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,6 +44,8 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 	private JTextField txtTelefono;
 	private JTable tblCliente;
 	private JTable tblCliente_1;
+	private JTextField txtBuscar;
+	private JTextField txtId;
 
 	/**
 	 * Launch the application.
@@ -67,19 +72,21 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 
 		getContentPane().setBackground(new Color(51, 52, 78));
 		getContentPane().setLayout(null);
+		((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+		
 		
 		clienteController = new ClienteController();
 
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(941, 23, 285, 514);
+		panel.setBounds(942, 23, 285, 514);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Gestion de Clientes");
-		lblNewLabel.setBounds(45, 23, 190, 27);
+		lblNewLabel.setBounds(34, 10, 220, 27);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 22));
 		panel.add(lblNewLabel);
 		
 		
@@ -101,22 +108,22 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("DNI:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(45, 87, 40, 26);
+		lblNewLabel_1.setBounds(45, 120, 40, 26);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Nombre:");
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1_1_1.setBounds(31, 151, 65, 26);
+		lblNewLabel_1_1_1.setBounds(34, 173, 65, 26);
 		panel.add(lblNewLabel_1_1_1);
 		
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Correo:");
 		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1_1_1_1.setBounds(39, 210, 57, 26);
+		lblNewLabel_1_1_1_1.setBounds(42, 232, 57, 26);
 		panel.add(lblNewLabel_1_1_1_1);
 		
 		JLabel lblNewLabel_1_1_1_1_2 = new JLabel("Telefono:");
 		lblNewLabel_1_1_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1_1_1_1_2.setBounds(31, 263, 65, 26);
+		lblNewLabel_1_1_1_1_2.setBounds(34, 285, 65, 26);
 		panel.add(lblNewLabel_1_1_1_1_2);
 		
 		JButton btnGuardar = new JButton("Guardar");
@@ -124,7 +131,7 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnGuardar.setBackground(new Color(78, 156, 54));
-		btnGuardar.setBounds(59, 328, 176, 33);
+		btnGuardar.setBounds(59, 338, 176, 33);
 		panel.add(btnGuardar);
 		
 		JButton btnLimpiar = new JButton("Limpiar");
@@ -132,7 +139,7 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		btnLimpiar.setForeground(Color.WHITE);
 		btnLimpiar.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnLimpiar.setBackground(new Color(252, 187, 33));
-		btnLimpiar.setBounds(59, 371, 176, 31);
+		btnLimpiar.setBounds(59, 381, 176, 31);
 		panel.add(btnLimpiar);
 		
 		JButton btnEliminar = new JButton("Eliminar");
@@ -140,42 +147,64 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnEliminar.setBackground(new Color(144, 8, 9));
-		btnEliminar.setBounds(59, 412, 176, 33);
+		btnEliminar.setBounds(59, 422, 176, 33);
 		panel.add(btnEliminar);
 		
 		JButton btnExcel = new JButton("Excel");
 		btnExcel.setIcon(new ImageIcon("C:\\Users\\Admin\\Downloads\\iconos\\excelicono.png"));
 		btnExcel.setForeground(new Color(255, 255, 255));
 		btnExcel.setBackground(new Color(33, 114, 69));
-		btnExcel.setBounds(59, 455, 85, 27);
+		btnExcel.setBounds(59, 465, 85, 27);
 		panel.add(btnExcel);
 		
 		txtDni = new JTextField();
 		txtDni.setColumns(10);
-		txtDni.setBounds(119, 93, 132, 20);
+		txtDni.setBounds(122, 126, 132, 20);
 		panel.add(txtDni);
 		
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
-		txtNombre.setBounds(119, 157, 132, 20);
+		txtNombre.setBounds(122, 179, 132, 20);
 		panel.add(txtNombre);
 		
 		txtCorreo = new JTextField();
 		txtCorreo.setColumns(10);
-		txtCorreo.setBounds(119, 216, 128, 20);
+		txtCorreo.setBounds(122, 238, 128, 20);
 		panel.add(txtCorreo);
 		
 		txtTelefono = new JTextField();
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(119, 269, 132, 20);
+		txtTelefono.setBounds(122, 291, 132, 20);
 		panel.add(txtTelefono);
 		
 		JButton btnPdf = new JButton("PDF");
 		btnPdf.setIcon(new ImageIcon("C:\\Users\\Admin\\Downloads\\iconos\\pdficono.png"));
 		btnPdf.setForeground(new Color(255, 255, 255));
 		btnPdf.setBackground(new Color(173, 8, 8));
-		btnPdf.setBounds(154, 455, 81, 27);
+		btnPdf.setBounds(154, 465, 81, 27);
 		panel.add(btnPdf);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Buscar por ID:");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1_1.setBounds(55, 70, 89, 20);
+		panel.add(lblNewLabel_1_1);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtBuscar.setColumns(10);
+		txtBuscar.setBounds(143, 70, 86, 20);
+		panel.add(txtBuscar);
+		
+		JButton btnBuscar = new JButton("");
+		btnBuscar.setBackground(new Color(204, 226, 178));
+		btnBuscar.setBounds(238, 67, 37, 23);
+		btnBuscar.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/lupaicono.png")));
+		panel.add(btnBuscar);
+		
+		txtId = new JTextField();
+		txtId.setBounds(10, 22, 4, 12);
+		panel.add(txtId);
+		txtId.setColumns(10);
 		
 		modelo = new DefaultTableModel(
 	            new Object[][] {},
@@ -223,12 +252,47 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 				    }
 				}
 			});
+		 
+			txtBuscar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					txtBuscar.setText("");
+				}
+			});
+			
 			
 			btnLimpiar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					limpiar();
 				}
 			});
+			
+			btnBuscar.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent arg0) {
+			        try {
+			            int idCliente = Integer.parseInt(txtBuscar.getText());
+			            Cliente clienteEncontrado = clienteController.buscarClientePorId(idCliente);
+
+			            // Verificar si se encontró un cliente
+			            if (clienteEncontrado != null) {
+			                // Establecer los valores en los campos
+			                txtId.setText(String.valueOf(clienteEncontrado.getId()));
+			                txtDni.setText(String.valueOf(clienteEncontrado.getDni()));
+			                txtNombre.setText(clienteEncontrado.getNombre());
+			                txtCorreo.setText(clienteEncontrado.getCorreo());
+			                txtTelefono.setText(clienteEncontrado.getTelefono());
+			            } else {
+			                // Manejar la situación donde no se encuentra el cliente
+			                JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Cliente no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+			            }
+
+			        } catch (NumberFormatException ex) {
+			            // Capturar excepción si el formato del ID no es válido
+			            JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "ID inválido", "Error", JOptionPane.ERROR_MESSAGE);
+			        }
+			    }
+			});
+		
 			
 			btnEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -290,5 +354,4 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 			txtCorreo.setText("");
 			txtTelefono.setText("");
 		}
-			
 	}
