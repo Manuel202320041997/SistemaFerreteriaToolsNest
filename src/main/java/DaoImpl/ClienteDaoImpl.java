@@ -89,24 +89,36 @@ public class ClienteDaoImpl implements ClienteDao {
 	}
 
 	@Override
-	public String buscarClientePorId(int idCliente) {
-		try {
-			String consulta = "SELECT nombres FROM cliente WHERE id = ?";
-			statement = conexion.prepareStatement(consulta);
-			statement.setInt(1, idCliente); // Establece el valor del parámetro
-			ResultSet resultSet = statement.executeQuery();
-	
-			if (resultSet.next()) {
-				// Obtenemos el nombre de la base de datos
-				String nombre = resultSet.getString("nombres");
-				return nombre; // Retorna el nombre del cliente
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	
-		return null; // Retorna null en caso de no encontrar un cliente con ese ID
-	}
+	  public Cliente buscarClientePorId(int idCliente) {
+        try {
+            String consulta = "SELECT id, dni, nombres, correo, telefono FROM cliente WHERE id = ?";
+            statement = conexion.prepareStatement(consulta);
+            statement.setInt(1, idCliente);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int dni = resultSet.getInt("dni");
+                String nombre = resultSet.getString("nombres");
+                String correo = resultSet.getString("correo");
+                String telefono = resultSet.getString("telefono");
+
+                Cliente cliente = new Cliente();
+                cliente.setId(id);
+                cliente.setDni(dni);
+                cliente.setNombre(nombre);
+                cliente.setCorreo(correo);
+                cliente.setTelefono(telefono);
+
+                return cliente;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 	@Override
 	public int obtenerIdClientePorNombre(String nombreCliente) {
@@ -128,5 +140,6 @@ public class ClienteDaoImpl implements ClienteDao {
 
     return idCliente;
 	}
+
 
 }
