@@ -5,6 +5,8 @@ import java.util.List;
 
 import DaoImpl.ClienteDaoImpl;
 import Model.Cliente;
+import Model.Usuario;
+import Dao.ClienteDao;
 
 public class ClienteController {
 	
@@ -13,15 +15,18 @@ public class ClienteController {
     public ClienteController(){
         clienteDaoImpl = new ClienteDaoImpl();
     }
-    
-    public List<Cliente> listarCliente() {
-        List<Cliente> listarCliente = null;
-        listarCliente = clienteDaoImpl.listarCliente();
-        return listarCliente;
-    }
 
-    
-    
+    public List<Cliente> listarCliente(){
+    	List<Cliente> listaCompleta = clienteDaoImpl.listarCliente();
+    	List<Cliente> listaFiltrada = new ArrayList<>();
+    	
+    	for (Cliente cliente : listaCompleta) {
+            if (cliente.getEstado()) {//TRAE A TODOS LOS OBJETOS O FILAS DE DATOS QUE HAY EN LISTA COMPLETA, PERO SOLO ADMITE LOS QUE TIENEN DE ESTADO (TRUE)
+                listaFiltrada.add(cliente);
+            }
+        }
+    	return listaFiltrada;
+    }
     
     public void agregarCliente(Cliente cliente) {
     	try {
@@ -36,8 +41,8 @@ public class ClienteController {
     public void eliminarCliente(int idCliente) {
     	clienteDaoImpl.eliminarCliente(idCliente);
     }
-
-    public String buscarClientePorId(int idCliente){
+    
+    public Cliente buscarClientePorId(int idCliente) {
         return clienteDaoImpl.buscarClientePorId(idCliente);
     }
 
