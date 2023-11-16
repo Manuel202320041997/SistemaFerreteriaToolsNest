@@ -5,6 +5,8 @@ import java.util.List;
 
 import DaoImpl.ClienteDaoImpl;
 import Model.Cliente;
+import Model.Usuario;
+import Dao.ClienteDao;
 
 public class ClienteController {
 	
@@ -13,7 +15,7 @@ public class ClienteController {
     public ClienteController(){
         clienteDaoImpl = new ClienteDaoImpl();
     }
-    
+
     public List<Cliente> listarCliente(){
     	List<Cliente> listaCompleta = clienteDaoImpl.listarCliente();
     	List<Cliente> listaFiltrada = new ArrayList<>();
@@ -39,8 +41,8 @@ public class ClienteController {
     public void eliminarCliente(int idCliente) {
     	clienteDaoImpl.eliminarCliente(idCliente);
     }
-
-    public String buscarClientePorId(int idCliente){
+    
+    public Cliente buscarClientePorId(int idCliente) {
         return clienteDaoImpl.buscarClientePorId(idCliente);
     }
 
