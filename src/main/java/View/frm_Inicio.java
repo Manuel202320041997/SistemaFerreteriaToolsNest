@@ -115,7 +115,7 @@ public class frm_Inicio extends JFrame {
 		menuUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.add(menuUsuario);
 		
-		ImageIcon iconoUsuario = new ImageIcon(getClass().getResource("/Img/usuario2.png"));
+		ImageIcon iconoUsuario = new ImageIcon(getClass().getResource("/Img/usuario.png"));
         menuUsuario.setIcon(iconoUsuario);
 		
 		JMenuItem submenuGestionUsuario = new JMenuItem("Gestionar Usuario");
@@ -163,6 +163,10 @@ public class frm_Inicio extends JFrame {
 		JMenuItem submenuFacturas = new JMenuItem("Facturas");
 		submenuFacturas.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuVentas.add(submenuFacturas);
+		
+		JMenuItem submenuDetalleVenta = new JMenuItem("Historial de Ventas");
+		submenuDetalleVenta.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		menuVentas.add(submenuDetalleVenta);
 		
 		menuAlmacen = new JMenu("Almacen");
 		menuAlmacen.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -297,12 +301,23 @@ public class frm_Inicio extends JFrame {
     	
     });
     
-	
-	
+    	submenuFacturas.addActionListener(new ActionListener() {
+    	    public void actionPerformed(ActionEvent e) {
+    	        cerrarInternalFrames();
+    	        try {
+    	            ifrm_Venta ifrm_ventas = new ifrm_Venta();
+    	            desktopPanePrincipal.add(ifrm_ventas);
+    	            ifrm_ventas.setVisible(true);
+    	        } catch (Exception ex) {
+    	            ex.printStackTrace();
+    	        }
+    	    }
+    	});
+
 	submenuInventario.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			cerrarInternalFrames();
-			frm_ListaInventario frm_listainventario = new frm_ListaInventario();
+			ifrm_ListaInventario frm_listainventario = new ifrm_ListaInventario();
 			frm_listainventario.setVisible(true);
 			desktopPanePrincipal.add(frm_listainventario);
 		}
