@@ -3,7 +3,10 @@ package View;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -13,19 +16,35 @@ import javax.swing.JTable;
 
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
-import Model.Venta;
+import Model.VentaConCliente;
+import Model.Cliente;
 import Model.DetalleVenta;
+import Model.Venta;
+import Model.VentaConCliente;
+import Controller.DetalleVentaController;
+import Controller.VentaConClienteController;
+import Controller.VentaController;
 import Controller.ProductoController;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 
 public class ifrm_DetalleVenta extends JInternalFrame {
 	
 	
 	private static final long serialVersionUID = 1L;
 	DefaultTableModel modelo;
+	DefaultTableModel modelo2;
 	private JTable tblDetalleVenta;
+	private JTable tblDetalle;
+	private JTable tblFactura;
 	ArrayList<DetalleVenta> listarProducto = new ArrayList<>();
+	private DetalleVentaController detalleVentaController;
+	private VentaController ventaController;
+	private ProductoController productoController;
+	private VentaConClienteController ventaConClienteController; 
+	private JDialog dialog;
+	private JTable table;
 	
 	/**
 	 * Launch the application.
@@ -53,22 +72,30 @@ public class ifrm_DetalleVenta extends JInternalFrame {
 		getContentPane().setLayout(null);
 		getContentPane().setLayout(null);
 	
+		detalleVentaController = new DetalleVentaController();
+		ventaController = new VentaController();
+		ventaConClienteController = new VentaConClienteController();
+		productoController = new ProductoController();
+		
+		
 		
 	
 		modelo = new DefaultTableModel(
 	            new Object[][] {},
 	            new String[] {
-	                "Id", "Nombre","Cantidad","P. Venta","Sub Total","Descuento","IGV","Total a Pagar","Accion"
+	               "Fecha", "N° Factura", "Cliente","ID Cliente","Telefono","N° DNI","Total"
 	            }
 	        );
 	
-		tblDetalleVenta = new JTable(modelo);
-		tblDetalleVenta.getColumnModel().getColumn(0).setPreferredWidth(20); // ID
-		tblDetalleVenta.getColumnModel().getColumn(1).setPreferredWidth(100); // DNI
-		//mostrarTabla();
-		 JScrollPane scrollPane = new JScrollPane(tblDetalleVenta);
-		 scrollPane.setBounds(83, 113, 804, 385);
-		 getContentPane().add(scrollPane);
+		tblFactura = new JTable(modelo);
+		tblFactura.setDefaultEditor(Object.class, null);
+		tblFactura.getColumnModel().getColumn(0).setPreferredWidth(20); // fecha
+		tblFactura.getColumnModel().getColumn(1).setPreferredWidth(30); // n° factura
+		tblFactura.getColumnModel().getColumn(1).setPreferredWidth(50); // Cliente
+		tblFactura.getColumnModel().getColumn(1).setPreferredWidth(20); // id cliente
+		tblFactura.getColumnModel().getColumn(1).setPreferredWidth(30); // telefono
+		tblFactura.getColumnModel().getColumn(1).setPreferredWidth(30); // dni
+		tblFactura.getColumnModel().getColumn(1).setPreferredWidth(20);
 		 
 		 JPanel panel_1 = new JPanel();
 		 panel_1.setLayout(null);
@@ -92,5 +119,118 @@ public class ifrm_DetalleVenta extends JInternalFrame {
 		 lblNewLabel_2.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/tiempo.png")));
 		 lblNewLabel_2.setBounds(10, 102, 63, 82);
 		 getContentPane().add(lblNewLabel_2);
-	}
+		 
+		
+			modelo = new DefaultTableModel(
+		            new Object[][] {},
+		            new String[] {
+		               "Fecha", "N° Factura", "Cliente","ID Cliente","Telefono","N° DNI","Total"
+		            }
+		        );
+		
+			tblFactura = new JTable(modelo);
+			tblFactura.setDefaultEditor(Object.class, null);
+			tblFactura.getColumnModel().getColumn(0).setPreferredWidth(20); // fecha
+			tblFactura.getColumnModel().getColumn(1).setPreferredWidth(30); // n° factura
+			tblFactura.getColumnModel().getColumn(1).setPreferredWidth(50); // Cliente
+			tblFactura.getColumnModel().getColumn(1).setPreferredWidth(20); // id cliente
+			tblFactura.getColumnModel().getColumn(1).setPreferredWidth(30); // telefono
+			tblFactura.getColumnModel().getColumn(1).setPreferredWidth(30); // dni
+			tblFactura.getColumnModel().getColumn(1).setPreferredWidth(20); // total
+			
+			mostrarTabla();
+			 JScrollPane scrollPane = new JScrollPane(tblFactura);
+			 scrollPane.setBounds(83, 102, 841, 396);
+			 getContentPane().add(scrollPane);
+			 
+			 tblFactura.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        if (e.getClickCount() == 2) {
+				            int filaSeleccionada = tblFactura.getSelectedRow();
+				            if (filaSeleccionada != -1) {
+				                // Obtener la factura seleccionada
+				                //Factura factura = obtenerFacturaDesdeLaFila(filaSeleccionada);
+				            	Object columFactura = tblFactura.getValueAt(filaSeleccionada, 1);
+				            	String numeroFactura = columFactura.toString();
+
+				                // Aquí debes abrir una nueva vista con el detalle de la factura
+				                // Puedes usar un JDialog, un JInternalFrame o cualquier otro contenedor
+				                mostrarDetalleFactura(numeroFactura);
+				            }
+				        }
+				    }
+				});
+		}
+		
+		private void mostrarTabla() {
+		    modelo.setRowCount(0); // Limpiar la tabla antes de agregar datos	   
+		    List<VentaConCliente> ventasConCliente = ventaConClienteController.listarVentasConCliente();
+		    
+		    for (VentaConCliente ventaConCliente : ventasConCliente) {
+		        Venta venta = ventaConCliente.getVenta();
+		        Cliente cliente = ventaConCliente.getCliente();
+
+		        Object[] fila2 = {
+		        	venta.getFechaVenta(),
+		            venta.getNumero_venta(),
+		            cliente.getNombre(),
+		            cliente.getId(),
+		            cliente.getTelefono(),
+		            cliente.getDni(),
+		            venta.getTotal()
+		        };
+
+		        modelo.addRow(fila2);
+		    }
+		}
+		
+		public void mostrarDetalleFactura(String numeroFactura) {
+		    dialog = new JDialog();
+		    dialog.setTitle("Detalle de la Factura " + numeroFactura);
+		    dialog.setSize(600, 480);
+
+		    dialog.setLocationRelativeTo(null);
+		    
+		    JPanel contentPanel = new JPanel();
+		    contentPanel.setBackground(new Color(67, 16, 58));
+		    dialog.getContentPane().add(contentPanel);
+		    
+		    modelo2 = new DefaultTableModel(
+		            new Object[][] {},
+		            new String[] {
+		               "Producto","Cantidad","Precio Unitario"
+		            }
+		        );
+		
+			tblDetalle = new JTable(modelo2);
+			tblDetalle.setDefaultEditor(Object.class, null);		
+			tblDetalle.getColumnModel().getColumn(1).setPreferredWidth(100); // Producto
+			tblDetalle.getColumnModel().getColumn(1).setPreferredWidth(20); // Cantidad
+			tblDetalle.getColumnModel().getColumn(1).setPreferredWidth(20); // precio		
+			
+			mostrarTablaDetalle(numeroFactura);
+			JScrollPane scrollPane = new JScrollPane(tblDetalle);
+			scrollPane.setBounds(37, 85, 500, 290);
+			contentPanel.add(scrollPane);
+		
+		    dialog.setVisible(true);
+		}
+		
+		public void mostrarTablaDetalle(String numeroFactura) {
+		    modelo2.setRowCount(0);
+
+		    List<DetalleVenta> listarDetalle = detalleVentaController.listarDetalleVentaPorNumeroFactura(numeroFactura);
+
+		    for (DetalleVenta detalleVenta : listarDetalle) {
+		        String nombreProducto = productoController.obtenerNombreProductoPorId(detalleVenta.getId_producto()); // Corregido aquí
+		        Object[] fila = {
+		                nombreProducto,
+		                detalleVenta.getCantidad(),
+		                detalleVenta.getPrecio_venta(),
+		        };
+		        modelo2.addRow(fila);
+		    }
+		}
 }
+

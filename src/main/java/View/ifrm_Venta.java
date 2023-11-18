@@ -8,6 +8,7 @@ import View.frm_Inicio;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
+import javax.swing.plaf.basic.BasicBorders;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -82,7 +83,8 @@ public class ifrm_Venta extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ifrm_Venta() {
-	    setBounds(0, 0, 1244, 560);
+		
+	    setBounds(-5, -5, 1244, 560);
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(new Color(51, 52, 78));
 		getContentPane().setLayout(null);
@@ -96,7 +98,7 @@ public class ifrm_Venta extends JInternalFrame {
 	       // actualizarComboBoxClientes();
 	       // actualizarComboBoxProductos();
 
-	        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+	      ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(511, 32, 711, 476);
@@ -333,7 +335,7 @@ public class ifrm_Venta extends JInternalFrame {
 
 			 //mostrarTabla();
 			 JScrollPane scrollPane = new JScrollPane(tbl_Venta);
-			 scrollPane.setBounds(22, 32, 449, 476);
+			 scrollPane.setBounds(22, 32, 459, 476);
 			 getContentPane().add(scrollPane);
 			/* 
 			 tblCliente_1 = new JTable();
