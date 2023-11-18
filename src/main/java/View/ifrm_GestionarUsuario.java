@@ -47,7 +47,9 @@ public class ifrm_GestionarUsuario extends JInternalFrame {
 	private JComboBox cboRol;
 	private JTextField txtId;
 
-	
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -73,8 +75,6 @@ public class ifrm_GestionarUsuario extends JInternalFrame {
 		getContentPane().setBackground(new Color(51, 52, 78));
 		getContentPane().setLayout(null);
 		
-		((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-		
 		usuariocontroller = new UsuarioController();
 		rolcontroller = new RolController();
 		
@@ -90,9 +90,9 @@ public class ifrm_GestionarUsuario extends JInternalFrame {
 		lblNewLabel.setBounds(10, 22, 260, 51);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Buscar por ID:");
+		JLabel lblNewLabel_1 = new JLabel("Buscar por DNI:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(46, 84, 89, 20);
+		lblNewLabel_1.setBounds(30, 84, 105, 20);
 		panel.add(lblNewLabel_1);
 		
 		txtBuscar = new JTextField();
@@ -398,7 +398,7 @@ public class ifrm_GestionarUsuario extends JInternalFrame {
 	}
 	
 	private void limpiar() {
-		txtId.setText("");
+		txtId.setText("0");
 		txtBuscar.setText("");
 		txtDni.setText("");
 		txtNombre.setText("");		

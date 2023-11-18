@@ -107,7 +107,8 @@ public class frm_Login extends JFrame {
         txtClave.setBounds(169, 279, 173, 30);
         panel_1.add(txtClave);
         
-        txtDni = new JTextField("75252391");
+        txtDni = new JTextField();
+        txtDni.setText("75252391");
         txtDni.setFont(new Font("Tahoma", Font.PLAIN, 18));
         txtDni.setBounds(169, 215, 173, 30);
         panel_1.add(txtDni);

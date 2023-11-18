@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 
 import Model.Usuario;
-import java.awt.Container;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -25,14 +25,12 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JDesktopPane;
-import Controller.ClienteController;
-import Controller.InventarioController;
 
 public class frm_Inicio extends JFrame {
-	private JDesktopPane desktopPanePrincipal;
 	private Usuario usuarioValidado;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	JDesktopPane desktopPanePrincipal;
 	private int x;
 	private int y;
 	private JMenu menuUsuario;
@@ -55,6 +53,7 @@ public class frm_Inicio extends JFrame {
 	                System.out.println("Valor de idrolUsuario antes de llamar a configurarPorRolUsuario: " + usuarioValido.getId_rol());
 	                //frame.configurarPorRolUsuario(usuarioValido.getId_rol());
 	                System.out.println("Después de llamar a configurarPorRolUsuario");
+	                frame.setVisible(true);
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
@@ -68,7 +67,6 @@ public class frm_Inicio extends JFrame {
 	public frm_Inicio(Usuario usuarioValidado) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
-		
 		setResizable(false);
         setUndecorated(true);
 		contentPane = new JPanel();		
@@ -115,23 +113,13 @@ public class frm_Inicio extends JFrame {
 		menuUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.add(menuUsuario);
 		
-		ImageIcon iconoUsuario = new ImageIcon(getClass().getResource("/Img/usuario.png"));
-        menuUsuario.setIcon(iconoUsuario);
-		
 		JMenuItem submenuGestionUsuario = new JMenuItem("Gestionar Usuario");
 		submenuGestionUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuUsuario.add(submenuGestionUsuario);
 		
-		JMenuItem submenuGestionRol = new JMenuItem("Gestionar Rol");
-		submenuGestionRol.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		menuUsuario.add(submenuGestionRol);
-		
 		menuCompras = new JMenu("Compras");
 		menuCompras.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.add(menuCompras);
-		
-	    ImageIcon iconoCompra = new ImageIcon(getClass().getResource("/Img/compra2.png"));
-        menuCompras.setIcon(iconoCompra);
 		
 		JMenuItem submenuProveedores = new JMenuItem("Proveedores");
 		submenuProveedores.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -153,27 +141,21 @@ public class frm_Inicio extends JFrame {
 		menuVentas.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.add(menuVentas);
 		
-		ImageIcon iconoVenta = new ImageIcon(getClass().getResource("/Img/venta.png"));
-        menuVentas.setIcon(iconoVenta);
-		
 		JMenuItem submenuClientes = new JMenuItem("Clientes");
 		submenuClientes.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuVentas.add(submenuClientes);
+		
+		JMenuItem submenuDetalleVenta = new JMenuItem("Detalle de Venta");
+		submenuDetalleVenta.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		menuVentas.add(submenuDetalleVenta);
 		
 		JMenuItem submenuFacturas = new JMenuItem("Facturas");
 		submenuFacturas.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuVentas.add(submenuFacturas);
 		
-		JMenuItem submenuDetalleVenta = new JMenuItem("Historial de Ventas");
-		submenuDetalleVenta.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		menuVentas.add(submenuDetalleVenta);
-		
 		menuAlmacen = new JMenu("Almacen");
 		menuAlmacen.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.add(menuAlmacen);
-		
-		ImageIcon iconoAlmacen = new ImageIcon(getClass().getResource("/Img/almacen.png"));
-        menuAlmacen.setIcon(iconoAlmacen);
 		
 		JMenuItem submenuInventario = new JMenuItem("Inventario");
 		submenuInventario.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -195,9 +177,6 @@ public class frm_Inicio extends JFrame {
 		menuContabilidad.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.add(menuContabilidad);
 		
-		  ImageIcon iconoContabilidad = new ImageIcon(getClass().getResource("/Img/contabilidad.png"));
-	      menuContabilidad.setIcon(iconoContabilidad);
-		
 		JMenuItem submenuPagoFacturas = new JMenuItem("Pago de Facturas");
 		submenuPagoFacturas.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuContabilidad.add(submenuPagoFacturas);
@@ -205,9 +184,6 @@ public class frm_Inicio extends JFrame {
 		menuRRHH = new JMenu("R.R.H.H.");
 		menuRRHH.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.add(menuRRHH);
-		
-		  ImageIcon iconoRRHH = new ImageIcon(getClass().getResource("/Img/rh.png"));
-	        menuRRHH.setIcon(iconoRRHH);
 		
 		JMenuItem submenuPlanilla = new JMenuItem("Planilla");
 		submenuPlanilla.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -244,9 +220,9 @@ public class frm_Inicio extends JFrame {
 		lblNewLabel_2.setBounds(1047, 11, 223, 52);
 		panel.add(lblNewLabel_2);
 		
-	    desktopPanePrincipal = new JDesktopPane();
+		desktopPanePrincipal = new JDesktopPane();
 		desktopPanePrincipal.setBackground(new Color(51, 52, 78));
-		desktopPanePrincipal.setBounds(-32, 141, 1302, 571);
+		desktopPanePrincipal.setBounds(0, 131, 1302, 589);
 		contentPane.add(desktopPanePrincipal);
 				
         panelTitulo.addMouseListener(new MouseAdapter() {
@@ -264,9 +240,6 @@ public class frm_Inicio extends JFrame {
                 setLocation(getLocation().x + arg0.getX() - x, getLocation().y + arg0.getY() - y);
             }
         });
-        
-        
-
 		
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -283,25 +256,50 @@ public class frm_Inicio extends JFrame {
 		/*EVENTOS PARA ABRIR INTERNAL FRAMES*/
 		submenuGestionUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 cerrarInternalFrames();
+				cerrarInternalFrames();
 				ifrm_GestionarUsuario ifrm_gestionarusuario = new ifrm_GestionarUsuario();
 				ifrm_gestionarusuario.setVisible(true);
 				desktopPanePrincipal.add(ifrm_gestionarusuario);
 			}
 		});
 		
-	    
-    	submenuClientes.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {   
-    		 cerrarInternalFrames();
-    		ifrm_GestionarCliente ifrm_gestionarcliente =  new ifrm_GestionarCliente();
-        		desktopPanePrincipal.add(ifrm_gestionarcliente);
-        		ifrm_gestionarcliente.setVisible(true);
-        	}
-    	
-    });
-    
-    	submenuFacturas.addActionListener(new ActionListener() {
+		submenuProveedores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cerrarInternalFrames();
+				ifrm_GestionProveedores ifrm_gestionarproveedores = new ifrm_GestionProveedores();
+				ifrm_gestionarproveedores.setVisible(true);
+				desktopPanePrincipal.add(ifrm_gestionarproveedores);			}
+		});
+		
+		submenuPreciosActualizados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cerrarInternalFrames();
+				ifrm_PreciosActualizados ifrm_preciosactualizados = new ifrm_PreciosActualizados();
+				ifrm_preciosactualizados.setVisible(true);
+				desktopPanePrincipal.add(ifrm_preciosactualizados);
+			}
+		});
+		
+		submenuOrdenCompra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cerrarInternalFrames();
+				ifrm_OrdenesCompra ifrm_ordenescompra = new ifrm_OrdenesCompra(usuarioValidado);
+				ifrm_ordenescompra.setVisible(true);
+				desktopPanePrincipal.add(ifrm_ordenescompra);
+			}
+		});
+		
+		submenuClientes.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {   
+	    		 cerrarInternalFrames();
+	    		ifrm_GestionarCliente ifrm_gestionarcliente =  new ifrm_GestionarCliente();
+	        		desktopPanePrincipal.add(ifrm_gestionarcliente);
+	        		ifrm_gestionarcliente.setVisible(true);
+	        	}
+	    	
+	    });
+		
+		submenuFacturas.addActionListener(new ActionListener() {
     	    public void actionPerformed(ActionEvent e) {
     	        cerrarInternalFrames();
     	        try {
@@ -313,16 +311,30 @@ public class frm_Inicio extends JFrame {
     	        }
     	    }
     	});
-
-	submenuInventario.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			cerrarInternalFrames();
-			ifrm_ListaInventario frm_listainventario = new ifrm_ListaInventario();
-			frm_listainventario.setVisible(true);
-			desktopPanePrincipal.add(frm_listainventario);
-		}
-	});
-}
+		
+    	submenuDetalleVenta.addActionListener(new ActionListener() {
+    	    public void actionPerformed(ActionEvent e) {
+    	        cerrarInternalFrames();
+    	        try {
+    	            ifrm_DetalleVenta ifrm_detalleventas = new ifrm_DetalleVenta();
+    	            desktopPanePrincipal.add(ifrm_detalleventas);
+    	            ifrm_detalleventas.setVisible(true);
+    	        } catch (Exception ex) {
+    	            ex.printStackTrace();
+    	        }
+    	    }
+    	});
+    	
+    	submenuInventario.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			cerrarInternalFrames();
+    			ifrm_ListaInventario frm_listainventario = new ifrm_ListaInventario();
+    			frm_listainventario.setVisible(true);
+    			desktopPanePrincipal.add(frm_listainventario);
+    		}
+    	});
+    	
+	}
 	
 	private void configurarMenuPorRolUsuario(int idrolUsuario) {
 	    System.out.println("ID de Rol del Usuario: " + idrolUsuario); // Agrega esta línea para imprimir el valor
@@ -333,10 +345,12 @@ public class frm_Inicio extends JFrame {
 	        // También puedes ocultar otros elementos relacionados con los menús si es necesario
 	    }
 	}
+	
+	// Método para cerrar todos los InternalFrames
 	private void cerrarInternalFrames() {
-        JInternalFrame[] frames = desktopPanePrincipal.getAllFrames();
-        for (JInternalFrame frame : frames) {
-            frame.dispose();
-        }
-    }
+	    JInternalFrame[] frames = desktopPanePrincipal.getAllFrames();
+	    for (JInternalFrame frame : frames) {
+	        frame.dispose();
+	    }
+	}
 }

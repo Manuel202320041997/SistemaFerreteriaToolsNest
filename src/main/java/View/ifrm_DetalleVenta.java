@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import javax.swing.border.EtchedBorder;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import Model.VentaConCliente;
 import Model.Cliente;
@@ -28,6 +29,7 @@ import Controller.ProductoController;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.SwingConstants;
 
 public class ifrm_DetalleVenta extends JInternalFrame {
 	
@@ -66,11 +68,14 @@ public class ifrm_DetalleVenta extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ifrm_DetalleVenta() {
-        setBounds(0, 0, 976, 537);
-
+		setBounds(0, 0, 1280, 589);
+		setClosable(true); //cerrar frame
+		setIconifiable(false); // minimizar frame
+		setMaximizable(false);
+		setResizable(false);
 		getContentPane().setBackground(new Color(51, 52, 78));
 		getContentPane().setLayout(null);
-		getContentPane().setLayout(null);
+		((BasicInternalFrameUI) this.getUI()).setNorthPane(null);	
 	
 		detalleVentaController = new DetalleVentaController();
 		ventaController = new VentaController();
@@ -101,19 +106,15 @@ public class ifrm_DetalleVenta extends JInternalFrame {
 		 panel_1.setLayout(null);
 		 panel_1.setForeground(Color.WHITE);
 		 panel_1.setBackground(new Color(40, 39, 61));
-		 panel_1.setBounds(0, 0, 973, 82);
+		 panel_1.setBounds(0, 0, 1264, 82);
 		 getContentPane().add(panel_1);
 		 
 		 JLabel lblNewLabel = new JLabel("Detalle de Venta");
-		 lblNewLabel.setBounds(349, 26, 262, 35);
+		 lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		 lblNewLabel.setBounds(10, 26, 1244, 35);
 		 panel_1.add(lblNewLabel);
 		 lblNewLabel.setForeground(new Color(255, 255, 255));
 		 lblNewLabel.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 33));
-		 
-		 JLabel lblNewLabel_1 = new JLabel("New label");
-		 lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Admin\\Downloads\\logo.png"));
-		 lblNewLabel_1.setBounds(10, 10, 73, 62);
-		 panel_1.add(lblNewLabel_1);
 		 
 		 JLabel lblNewLabel_2 = new JLabel("New label");
 		 lblNewLabel_2.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/tiempo.png")));
@@ -140,7 +141,7 @@ public class ifrm_DetalleVenta extends JInternalFrame {
 			
 			mostrarTabla();
 			 JScrollPane scrollPane = new JScrollPane(tblFactura);
-			 scrollPane.setBounds(83, 102, 841, 396);
+			 scrollPane.setBounds(83, 102, 1102, 432);
 			 getContentPane().add(scrollPane);
 			 
 			 tblFactura.addMouseListener(new MouseAdapter() {

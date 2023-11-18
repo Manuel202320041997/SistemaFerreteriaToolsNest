@@ -38,6 +38,7 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
+import javax.swing.SpinnerNumberModel;
 
 public class ifrm_Venta extends JInternalFrame {
 
@@ -83,11 +84,14 @@ public class ifrm_Venta extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ifrm_Venta() {
-		
-	    setBounds(-5, -5, 1244, 560);
-		getContentPane().setLayout(null);
+		setBounds(0, 0, 1280, 589);
+		setClosable(true); //cerrar frame
+		setIconifiable(false); // minimizar frame
+		setMaximizable(false);
+		setResizable(false);
 		getContentPane().setBackground(new Color(51, 52, 78));
 		getContentPane().setLayout(null);
+		((BasicInternalFrameUI) this.getUI()).setNorthPane(null);	
 		
 		
 		    ventaController = new VentaController();
@@ -101,18 +105,18 @@ public class ifrm_Venta extends JInternalFrame {
 	      ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(511, 32, 711, 476);
+		panel.setBounds(511, 32, 711, 505);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("Cliente:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_2.setBounds(62, 160, 73, 13);
+		lblNewLabel_2.setBounds(62, 199, 73, 13);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Producto:");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_3.setBounds(62, 216, 92, 13);
+		lblNewLabel_3.setBounds(62, 255, 92, 13);
 		panel.add(lblNewLabel_3);
 		
 		cboCliente = new JComboBox<String>();
@@ -124,7 +128,7 @@ public class ifrm_Venta extends JInternalFrame {
 				//CargarComboProducto();
 			}
 		});
-		cboCliente.setBounds(157, 152, 186, 31);
+		cboCliente.setBounds(157, 191, 186, 31);
 		cboCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
 		cboCliente.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Cliente"}));
 		actualizarComboBoxClientes();
@@ -138,7 +142,7 @@ public class ifrm_Venta extends JInternalFrame {
 				//CargarComboProducto();
 			}
 		});
-		cboProducto.setBounds(157, 208, 186, 31);
+		cboProducto.setBounds(157, 247, 186, 31);
 		cboProducto.setFont(new Font("Tahoma", Font.BOLD, 14));
 		cboProducto.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Producto"}));
 		actualizarComboBoxProductos();
@@ -146,28 +150,28 @@ public class ifrm_Venta extends JInternalFrame {
 		
 		JLabel lblNewLabel_4 = new JLabel("Cantidad:");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4.setBounds(62, 272, 78, 13);
+		lblNewLabel_4.setBounds(62, 311, 78, 13);
 		panel.add(lblNewLabel_4);
 		
 		JSpinner spinnerCantidad = new JSpinner();
-		spinnerCantidad.setBounds(166, 272, 124, 20);
+		spinnerCantidad.setBounds(157, 305, 186, 31);
 		panel.add(spinnerCantidad);
 		
 		JButton btnAgregar = new JButton("Registrar");
 		btnAgregar.setForeground(new Color(255, 255, 255));
 		btnAgregar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAgregar.setBackground(new Color(51, 52, 78));
-		btnAgregar.setBounds(91, 318, 228, 41);
+		btnAgregar.setBounds(91, 357, 228, 41);
 		btnAgregar.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/agregar.png")));
 		panel.add(btnAgregar);
 		
 		JLabel lblNewLabel_5 = new JLabel("Cliente ID:");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_5.setBounds(62, 101, 85, 13);
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_5.setBounds(159, 129, 85, 13);
 		panel.add(lblNewLabel_5);
 		
 		txtBuscar = new JTextField();
-		txtBuscar.setBounds(157, 95, 81, 29);
+		txtBuscar.setBounds(231, 126, 55, 19);
 		panel.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		
@@ -176,76 +180,72 @@ public class ifrm_Venta extends JInternalFrame {
 		btnBuscar.setForeground(new Color(255, 255, 255));
 		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnBuscar.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/buscar.png")));
-		btnBuscar.setBounds(248, 95, 47, 32);
+		btnBuscar.setBounds(296, 120, 47, 30);
 		panel.add(btnBuscar);
 		
 		JLabel lblNewLabel_6 = new JLabel("SubTotal:");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_6.setBounds(451, 101, 70, 13);
+		lblNewLabel_6.setBounds(451, 122, 70, 13);
 		panel.add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("Descuento:");
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_7.setBounds(439, 137, 82, 13);
+		lblNewLabel_7.setBounds(439, 158, 82, 13);
 		panel.add(lblNewLabel_7);
 		
 		JLabel lblNewLabel_8 = new JLabel("iGV:");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_8.setBounds(476, 186, 45, 13);
+		lblNewLabel_8.setBounds(476, 207, 45, 13);
 		panel.add(lblNewLabel_8);
 		
 		JLabel lblNewLabel_9 = new JLabel("Total:");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_9.setBounds(465, 236, 45, 13);
+		lblNewLabel_9.setBounds(465, 257, 45, 13);
 		panel.add(lblNewLabel_9);
 		
 		JLabel lblNewLabel_10 = new JLabel("Efectivo:");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_10.setBounds(451, 285, 70, 13);
+		lblNewLabel_10.setBounds(451, 306, 70, 13);
 		panel.add(lblNewLabel_10);
 		
 		JLabel lblNewLabel_11 = new JLabel("Cambio:");
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel_11.setBounds(451, 332, 70, 13);
+		lblNewLabel_11.setBounds(451, 353, 70, 13);
 		panel.add(lblNewLabel_11);
 		
 		txtSubTotal = new JTextField();
 		txtSubTotal.setEditable(false);
-		txtSubTotal.setBounds(531, 100, 96, 19);
+		txtSubTotal.setBounds(531, 121, 96, 19);
 		panel.add(txtSubTotal);
 		txtSubTotal.setColumns(10);
 		
 		txtDescuento = new JTextField();
 		txtDescuento.setEditable(false);
-		txtDescuento.setBounds(531, 136, 96, 19);
+		txtDescuento.setBounds(531, 157, 96, 19);
 		panel.add(txtDescuento);
 		txtDescuento.setColumns(10);
 		
 		txtIGV = new JTextField();
 		txtIGV.setEditable(false);
-		txtIGV.setBounds(530, 185, 96, 19);
+		txtIGV.setBounds(530, 206, 96, 19);
 		panel.add(txtIGV);
 		txtIGV.setColumns(10);
 		
 		txtTotal = new JTextField();
 		txtTotal.setEditable(false);
-		txtTotal.setBounds(531, 235, 96, 19);
+		txtTotal.setBounds(531, 256, 96, 19);
 		panel.add(txtTotal);
 		txtTotal.setColumns(10);
 		
 		txtCambio = new JTextField();
 		txtCambio.setEditable(false);
-		txtCambio.setBounds(531, 331, 96, 19);
+		txtCambio.setBounds(531, 352, 96, 19);
 		panel.add(txtCambio);
 		txtCambio.setColumns(10);
 		
-		JLabel Calcular = new JLabel("");
-		Calcular.setBorder(new LineBorder(new Color(0, 0, 0)));
-		Calcular.setBounds(432, 80, 217, 354);
-		panel.add(Calcular);
-		
 		JSpinner spinnerEfectivo = new JSpinner();
-		spinnerEfectivo.setBounds(531, 284, 96, 20);
+		spinnerEfectivo.setModel(new SpinnerNumberModel(Double.valueOf(0), Double.valueOf(0), null, Double.valueOf(1)));
+		spinnerEfectivo.setBounds(531, 305, 96, 20);
 		panel.add(spinnerEfectivo);
 		
 		JButton btnNuevaVenta = new JButton("Venta");
@@ -253,7 +253,7 @@ public class ifrm_Venta extends JInternalFrame {
 		btnNuevaVenta.setBackground(new Color(51, 52, 78));
 		btnNuevaVenta.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNuevaVenta.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/venta-factura.png")));
-		btnNuevaVenta.setBounds(20, 415, 115, 51);
+		btnNuevaVenta.setBounds(20, 443, 115, 51);
 		panel.add(btnNuevaVenta);
 		
 		JButton btnCambio = new JButton("Cambio");
@@ -261,7 +261,7 @@ public class ifrm_Venta extends JInternalFrame {
 		btnCambio.setBackground(new Color(51, 52, 78));
 		btnCambio.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnCambio.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/intercambiar.png")));
-		btnCambio.setBounds(145, 415, 124, 51);
+		btnCambio.setBounds(145, 443, 124, 51);
 		panel.add(btnCambio);
 		
 		JButton btnRegistrarVenta = new JButton("Vender");
@@ -269,7 +269,7 @@ public class ifrm_Venta extends JInternalFrame {
 		btnRegistrarVenta.setBackground(new Color(51, 52, 78));
 		btnRegistrarVenta.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnRegistrarVenta.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/vender.png")));
-		btnRegistrarVenta.setBounds(279, 415, 126, 51);
+		btnRegistrarVenta.setBounds(279, 443, 126, 51);
 		panel.add(btnRegistrarVenta);
 		
 		JPanel panel_1 = new JPanel();
@@ -303,16 +303,21 @@ public class ifrm_Venta extends JInternalFrame {
 		
 		JLabel lblNewLabel_6_1_1 = new JLabel("");
 		lblNewLabel_6_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_6_1_1.setBounds(31, 80, 324, 296);
+		lblNewLabel_6_1_1.setBounds(31, 101, 324, 319);
 		panel.add(lblNewLabel_6_1_1);
 		
 		JButton btnCalcular = new JButton("Calcular");
 		btnCalcular.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnCalcular.setForeground(new Color(255, 255, 255));
-		btnCalcular.setBounds(476, 387, 142, 29);
+		btnCalcular.setBounds(476, 408, 142, 29);
 		btnCalcular.setIcon(new ImageIcon(frm_Login.class.getResource("/Img/calculadora.png")));
 		btnCalcular.setBackground(new Color(51, 52, 78));
 		panel.add(btnCalcular);
+		
+		JLabel Calcular = new JLabel("");
+		Calcular.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Calcular.setBounds(432, 101, 217, 354);
+		panel.add(Calcular);
 	
 		
 		/*
@@ -335,7 +340,7 @@ public class ifrm_Venta extends JInternalFrame {
 
 			 //mostrarTabla();
 			 JScrollPane scrollPane = new JScrollPane(tbl_Venta);
-			 scrollPane.setBounds(22, 32, 459, 476);
+			 scrollPane.setBounds(22, 32, 459, 505);
 			 getContentPane().add(scrollPane);
 			/* 
 			 tblCliente_1 = new JTable();
@@ -429,17 +434,16 @@ public class ifrm_Venta extends JInternalFrame {
 			btnCambio.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					Object spinnerValue = spinnerEfectivo.getValue();
-					double total = Double.parseDouble(txtTotal.getText());
-			        if (spinnerValue instanceof Double) {
-			        	
-			            double efectivo = (double) spinnerValue;
+					double efectivo = (double) spinnerEfectivo.getValue();
+					double total = Double.parseDouble(txtTotal.getText());			            
 			            
 			            if (efectivo > 0) {  // Validar que la cantidad sea mayor que cero
 			            	
 			            	if(efectivo >= total) {
 			            		
-			            		double cambio = efectivo - total;				            	
+			            		double cambio = efectivo - total;
+			            		System.out.println(cambio);
+			            		cambio = Math.round(cambio * 100.0) / 100.0;
 				            	txtCambio.setText(String.valueOf(cambio));
 			            	}
 			            	else {
@@ -450,7 +454,7 @@ public class ifrm_Venta extends JInternalFrame {
 			            	JOptionPane.showMessageDialog(ifrm_Venta.this, "Ingresa efectivo del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
 			            }
 			        }
-				}
+				
 			});
 			
 			btnRegistrarVenta.addActionListener(new ActionListener() {

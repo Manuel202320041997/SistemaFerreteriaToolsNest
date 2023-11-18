@@ -9,20 +9,17 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.plaf.basic.BasicBorders;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Controller.ClienteController;
-import Controller.InventarioController;
+import Controller.ProductoController;
 import Model.Cliente;
-import Model.Inventario;
-import DaoImpl.InventarioDaoImpl;
+import Model.Producto;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import Controller.InventarioController;
-import Dao.InventarioDao;
 import java.awt.Font;
 import java.util.List;
 
 public class ifrm_ListaInventario extends JInternalFrame {
 
-	private InventarioController inventariocontroller;
+	private ProductoController productocontroller;
 	DefaultTableModel modelo;
 	private static final long serialVersionUID = 1L;
 	private JTable tblInventario;
@@ -48,12 +45,16 @@ public class ifrm_ListaInventario extends JInternalFrame {
 	 */
 	public ifrm_ListaInventario() {
 		setBounds(0, 0, 1280, 589);
+		setClosable(true); //cerrar frame
+		setIconifiable(false); // minimizar frame
+		setMaximizable(false);
+		setResizable(false);
 		getContentPane().setBackground(new Color(51, 52, 78));
 		getContentPane().setLayout(null);
-		((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-
 		
-		inventariocontroller = new InventarioController();
+		((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+		
+		productocontroller = new ProductoController();
 
 		
 		tblInventario = new JTable();
@@ -97,18 +98,18 @@ public class ifrm_ListaInventario extends JInternalFrame {
 	
 	private void mostrarTabla() {
 	    modelo.setRowCount(0); // Limpiar la tabla antes de agregar datos
-	    List<Inventario> listarInventario = inventariocontroller.listarInventario();
+	    List<Producto> listarProducto = productocontroller.listarProducto();
 	    
-	    for (Inventario inventario : listarInventario) {
+	    for (Producto producto : listarProducto) {
 	        Object[] fila = {
 	        		
-	        		inventario.getId(),
-	        		inventario.getDescripcion(),
-	        		inventario.getIdMarca(),
-	        		inventario.getPrecioCompra(),
-	        		inventario.getPrecioVenta(),
-	        		inventario.getStock(),
-	        		inventario.getIdSubcategoria()	  
+	        		producto.getId(),
+	        		producto.getDescripcion(),
+	        		producto.getId_marca(),
+	        		producto.getPrecio_compra(),
+	        		producto.getPrecio_venta(),
+	        		producto.getStock(),
+	        		producto.getId_subcategoria()	  
 	        		
 	        };
 	        modelo.addRow(fila);
