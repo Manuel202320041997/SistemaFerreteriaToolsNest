@@ -45,6 +45,21 @@ public class VentaDaoImpl implements VentaDao {
 
 		    return idGenerado;
 	}
+	@Override
+	public String obtenerUltimoNumeroFactura() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void actualizarNumeroFactura(String nuevoNumero) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public int obtenerIdFacturaPorNumeroFactura(String numeroFactura) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }
 

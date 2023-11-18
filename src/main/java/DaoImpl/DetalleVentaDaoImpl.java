@@ -67,7 +67,7 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao{
 			
 			while(rs.next()) {
 				id_producto = rs.getInt("id");
-				nombre = rs.getString("nombre");
+				nombre = rs.getString("descripcion");
 				cantidad = rs.getInt("cantidad");
 				p_unitario =rs.getDouble("precio");
 				igv = rs.getInt("porcentajeigv");
@@ -121,6 +121,24 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao{
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    }
+	}
+
+	@Override
+	public List<DetalleVenta> listarDetalleVentaPorNumeroFactura(int idFactura) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DetalleVenta obtenerDetallePorNumeroFactura(String numeroFactura) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DetalleVenta> listarDetalleVentaPorNumeroFactura(String numeroFactura) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
