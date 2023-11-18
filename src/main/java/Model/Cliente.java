@@ -3,10 +3,10 @@ package Model;
 public class Cliente {
 	
 	private int id;
-	private String dni;
+	private int dni;
 	private String nombre;
 	private String correo;
-	private int telefono;
+	private String telefono;
 	private boolean estado;
 	
 	public int getId() {
@@ -15,10 +15,10 @@ public class Cliente {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDni() {
+	public int getDni() {
 		return dni;
 	}
-	public void setDni(String dni) {
+	public void setDni(int dni) {
 		this.dni = dni;
 	}
 	public String getNombre() {
@@ -33,10 +33,10 @@ public class Cliente {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 	public boolean getEstado() {
