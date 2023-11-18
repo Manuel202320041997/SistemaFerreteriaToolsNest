@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.ClienteController;
 //import Controller.ReporteController;
 import Model.Cliente;
+import Model.Usuario;
 //import Model.Reporte;
 //import Model.ReporteExcel;
 import DaoImpl.ClienteDaoImpl;
@@ -67,7 +68,7 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ifrm_GestionarCliente() {
-		setBounds(0, 0, 1280, 589);
+		setBounds(-5, -5, 1280, 589);
 		getContentPane().setLayout(null);
 
 		getContentPane().setBackground(new Color(51, 52, 78));
@@ -131,7 +132,7 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnGuardar.setBackground(new Color(78, 156, 54));
-		btnGuardar.setBounds(59, 338, 176, 33);
+		btnGuardar.setBounds(59, 349, 176, 33);
 		panel.add(btnGuardar);
 		
 		JButton btnLimpiar = new JButton("Limpiar");
@@ -139,22 +140,14 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		btnLimpiar.setForeground(Color.WHITE);
 		btnLimpiar.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnLimpiar.setBackground(new Color(252, 187, 33));
-		btnLimpiar.setBounds(59, 381, 176, 31);
+		btnLimpiar.setBounds(59, 403, 176, 31);
 		panel.add(btnLimpiar);
-		
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setIcon(new ImageIcon("C:\\Users\\Admin\\Downloads\\iconos\\eliminaricono.png"));
-		btnEliminar.setForeground(Color.WHITE);
-		btnEliminar.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		btnEliminar.setBackground(new Color(144, 8, 9));
-		btnEliminar.setBounds(59, 422, 176, 33);
-		panel.add(btnEliminar);
 		
 		JButton btnExcel = new JButton("Excel");
 		btnExcel.setIcon(new ImageIcon("C:\\Users\\Admin\\Downloads\\iconos\\excelicono.png"));
 		btnExcel.setForeground(new Color(255, 255, 255));
 		btnExcel.setBackground(new Color(33, 114, 69));
-		btnExcel.setBounds(59, 465, 85, 27);
+		btnExcel.setBounds(59, 459, 85, 33);
 		panel.add(btnExcel);
 		
 		txtDni = new JTextField();
@@ -181,7 +174,7 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		btnPdf.setIcon(new ImageIcon("C:\\Users\\Admin\\Downloads\\iconos\\pdficono.png"));
 		btnPdf.setForeground(new Color(255, 255, 255));
 		btnPdf.setBackground(new Color(173, 8, 8));
-		btnPdf.setBounds(154, 465, 81, 27);
+		btnPdf.setBounds(154, 459, 81, 33);
 		panel.add(btnPdf);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Buscar por ID:");
@@ -227,31 +220,79 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		 scrollPane.setBounds(24, 23, 878, 514);
 		 getContentPane().add(scrollPane);
 		 
+		 /*
 		 tblCliente_1 = new JTable();
 		 scrollPane.setColumnHeaderView(tblCliente_1);
+		 */
 		 
-		 
-		 btnGuardar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						
-						Cliente cliente = new Cliente();
-						cliente.setDni(Integer.parseInt(txtDni.getText()));
-						cliente.setNombre(txtNombre.getText());
-						cliente.setCorreo(txtCorreo.getText());
-						cliente.setTelefono(txtTelefono.getText());
 
-			            	            
-			            clienteController.agregarCliente(cliente);
-			            mostrarTabla();
-			            limpiar();
-			            JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Cliente agregado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-				       
-				    } catch (Exception ex) {
-				        JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Ocurrió un error al registrar el Cliente", "Error", JOptionPane.ERROR_MESSAGE);
-				    }
-				}
-			});
+		   btnGuardar.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                try {
+	                    Cliente cliente = new Cliente();
+	                    String dniStr = txtDni.getText().trim();
+
+	                    if (!dniStr.isEmpty() && dniStr.matches("\\d{1,8}")) {
+	                        cliente.setDni(Integer.parseInt(dniStr));
+	   
+	                        		//EDITADO
+			                    
+		                   String nombre = txtNombre.getText().trim();
+		                        // Agregar validación adicional si es necesario para el correo
+		                   cliente.setNombre(nombre);    	
+			               
+	                        String correo = txtCorreo.getText().trim();
+	                        // Agregar validación adicional si es necesario para el correo
+	                        cliente.setCorreo(correo);
+
+	                        String telefono = txtTelefono.getText().trim();
+	                        // Agregar validación adicional si es necesario para el teléfono
+	                        cliente.setTelefono(telefono);
+
+	                        // Obtener el valor del txtId (suponiendo que es un JTextField)
+	                        String idStr = txtId.getText().trim();
+
+	                        if (!idStr.isEmpty() && Integer.parseInt(idStr) > 0) {
+	                            // Si txtId tiene un valor, asumimos que se desea editar
+	                            cliente.setId(Integer.parseInt(idStr));
+
+	                            // Llamar al método de editarCliente en el controlador de clientes
+	                            clienteController.editarCliente(cliente);
+
+	                            // Realizar otras operaciones necesarias para la edición
+
+	                            // Actualizar la tabla y limpiar los campos
+	                            mostrarTabla();
+	                            limpiar();
+
+	                            // Mostrar mensaje de éxito
+	                            JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Cliente editado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	                        } else {
+	                            // Si la verificación del DNI en clientes es exitosa, agregar el cliente
+	                            clienteController.agregarCliente(cliente);
+
+	                            // Realizar otras operaciones necesarias para la adición
+
+	                            // Actualizar la tabla y limpiar los campos
+	                            mostrarTabla();
+	                            limpiar();
+
+	                            // Mostrar mensaje de éxito
+	                            JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Cliente agregado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	                        }
+	                    } else {
+	                        // Mostrar mensaje de error porque el DNI no existe en la tabla clientes
+	                        JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Error: El DNI no está registrado como cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+	                    }
+	                } catch (IllegalArgumentException ex) {
+	                    // Capturar excepciones relacionadas con validaciones
+	                    JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	                } catch (Exception e2) {
+	                    // Capturar otras excepciones no manejadas
+	                    e2.printStackTrace();
+	                }
+	            }
+	        });
 		 
 			txtBuscar.addMouseListener(new MouseAdapter() {
 				@Override
@@ -292,31 +333,6 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 			        }
 			    }
 			});
-		
-			
-			btnEliminar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					int filaSeleccionada = tblCliente.getSelectedRow();
-				    
-				    if (filaSeleccionada >= 0) {
-				        try {
-				            Object idObject = tblCliente.getValueAt(filaSeleccionada, 0);
-				            int idCliente = Integer.parseInt(idObject.toString()); // Intenta la conversión
-
-				            int confirmacion = JOptionPane.showConfirmDialog(ifrm_GestionarCliente.this, "¿Está seguro de que desea eliminar este Producto?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
-
-				            if (confirmacion == JOptionPane.YES_OPTION) {
-				                clienteController.eliminarCliente(idCliente); // Llama al método del controlador para eliminar el alumno
-				                mostrarTabla();
-				            }
-				        } catch (NumberFormatException ex) {
-				            JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Error de conversión: El valor no es un número entero válido.", "Error", JOptionPane.ERROR_MESSAGE);
-				        }
-				    } else {
-				        JOptionPane.showMessageDialog(ifrm_GestionarCliente.this, "Por favor, seleccione un Usuario para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-				    }   
-				}
-			});
 		 
 		 btnExcel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -348,7 +364,7 @@ public class ifrm_GestionarCliente extends JInternalFrame {
 		}
 		
 		private void limpiar() {
-			
+			txtBuscar.setText("");
 			txtDni.setText("");
 			txtNombre.setText("");
 			txtCorreo.setText("");
