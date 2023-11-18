@@ -10,7 +10,9 @@ public interface ClienteDao {
 	
 	public void agregarCliente(Cliente cliente);
 	
-	public void eliminarCliente(int idCliente);
+    public void editarCliente(Cliente cliente);
+    
+    public boolean verificarSiExisteDni(int dniUsuario);
 	
 	public Cliente buscarClientePorId(int idCliente);
 
