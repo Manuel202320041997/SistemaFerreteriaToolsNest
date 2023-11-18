@@ -57,4 +57,20 @@ public class VentaController {
 		
 		detalleVentaDaoImpl.agregarDetalleVenta(detalle);
 	}
+	
+	private String obtenerUltimoNumeroFactura() {
+	    return ventaDaoImpl.obtenerUltimoNumeroFactura();
+	}
+
+	private void actualizarNumeroFactura(String nuevoNumeroFactura) {
+	    ventaDaoImpl.actualizarNumeroFactura(nuevoNumeroFactura);
+	}
+
+
+public int obtenerIdFacturaPorNumeroFactura(String numeroFactura) {
+		return ventaDaoImpl.obtenerIdFacturaPorNumeroFactura(numeroFactura);
+	}
+	
+	
+	
 }

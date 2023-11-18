@@ -92,4 +92,15 @@ public class ProductoController {
 	   public int obtenerIdProductoPorNombre(String nombreProducto){
 			return productoDaoImpl.obtenerIdProductoPorNombre(nombreProducto);
 	   }
+	   
+	   public String obtenerNombreProductoPorId(int idProducto) {
+		    Producto producto = obtenerProductoPorId(idProducto);
+		    
+		    if (producto != null) {
+		        return producto.getDescripcion();
+		    } else {
+		        return "No encontrado";
+		    }
+		}
+	   
 }

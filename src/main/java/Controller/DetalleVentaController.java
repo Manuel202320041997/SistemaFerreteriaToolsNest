@@ -7,16 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 import DaoImpl.DetalleVentaDaoImpl;
-
+import Controller.VentaController;
 import Model.DetalleVenta;
 
 
 public class DetalleVentaController {
 private DetalleVentaDaoImpl detalleventaDaoImpl = null;
+private VentaController ventaController;
 //private CategoriaController categoriaController = new CategoriaController();
     
     public DetalleVentaController(){
         detalleventaDaoImpl = new DetalleVentaDaoImpl();
+        ventaController = new VentaController();
     }
     
     public List<DetalleVenta> listarDetalleVenta(){
@@ -25,14 +27,28 @@ private DetalleVentaDaoImpl detalleventaDaoImpl = null;
     	return listarDetalleVenta;
     }
     
+    public List<DetalleVenta> listarDetalleVentaPorNumeroFactura(String numeroFactura){
+    	List<DetalleVenta> listarDetalleVenta = new ArrayList<>();
+    	int idFactura = ventaController.obtenerIdFacturaPorNumeroFactura(numeroFactura);
+    	
+    	if(idFactura > 0) {
+    		listarDetalleVenta = detalleventaDaoImpl.listarDetalleVentaPorNumeroFactura(idFactura);	
+    	}
+    	
+    	else {
+    		System.err.println("ERROR AL LISTAR EL DETALLE");
+    		
+    	}
+    	return listarDetalleVenta;
+    }
     
     public Map<String, Double> calcularVenta(String clienteSeleccionado, List<DetalleVenta> detalleProductos) {
     	
-    	System.out.println("Datos recibidos en el controlador:");
-        System.out.println("Cliente Seleccionado: " + clienteSeleccionado);
-        System.out.println("Detalle de Productos: " + detalleProductos);
+    	//System.out.println("Datos recibidos en el controlador:");
+        //System.out.println("Cliente Seleccionado: " + clienteSeleccionado);
+        //System.out.println("Detalle de Productos: " + detalleProductos);
     	
-    	System.out.println("Entrando en calcularVenta"); // Mensaje de entrada para verificar que se está ejecutando
+    	//System.out.println("Entrando en calcularVenta"); // Mensaje de entrada para verificar que se está ejecutando
     	    double subTotal = 0;
     	    double descuento = 0;
     	    double igv = 0;
@@ -40,15 +56,15 @@ private DetalleVentaDaoImpl detalleventaDaoImpl = null;
 
     	    for (DetalleVenta detalle : detalleProductos) {
     	    	
-    	    	System.out.println("ID del Producto: " + detalle.getId_producto());
-    	        System.out.println("Cantidad: " + detalle.getCantidad());
-    	        System.out.println("Precio Unitario: " + detalle.getPrecio_venta());
+    	  //  	System.out.println("ID del Producto: " + detalle.getId_producto());
+    	    //    System.out.println("Cantidad: " + detalle.getCantidad());
+    	     //   System.out.println("Precio Unitario: " + detalle.getPrecioUnitario());
     	        double precioUnitario = detalle.getPrecio_venta();
     	        int cantidad = detalle.getCantidad();
     	        subTotal += precioUnitario * cantidad;
     	    }
 
-    	    System.out.println("Subtotal: " + subTotal); // Mensaje para verificar el valor del subtotal
+    	    //System.out.println("Subtotal: " + subTotal); // Mensaje para verificar el valor del subtotal
 
     	    if (subTotal >= 500 && subTotal < 1000) {
     	        descuento = subTotal * 0.05;
@@ -58,7 +74,7 @@ private DetalleVentaDaoImpl detalleventaDaoImpl = null;
     	        descuento = subTotal * 0.10;
     	    }
 
-    	    System.out.println("Descuento: " + descuento); // Mensaje para verificar el valor del descuento
+    	    //System.out.println("Descuento: " + descuento); // Mensaje para verificar el valor del descuento
 
     	    igv = (subTotal - descuento) * 0.18;
     	    totalPagar = subTotal - descuento + igv;
@@ -77,6 +93,18 @@ private DetalleVentaDaoImpl detalleventaDaoImpl = null;
     	    resultados.put("totalPagar", totalPagarRedondeado);
 
     	    return resultados;
+    }    
+        
+    public void registrarDetalleVenta(int idFactura, int idProducto, int cantidad, double precioUnitario) {
+    	DetalleVenta detalle = new DetalleVenta(idFactura, idProducto, cantidad, precioUnitario);
+		
+		detalle.setId_venta(idFactura);
+		detalle.setId_producto(idProducto);
+		detalle.setCantidad(cantidad);
+		detalle.setPrecio_venta(precioUnitario);
+		
+		detalleventaDaoImpl.agregarDetalleVenta(detalle);
     }
+    
     
 }
