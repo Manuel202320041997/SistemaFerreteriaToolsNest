@@ -17,22 +17,29 @@ public class VentaController {
 	}
 	
 	public String generarNumeroFactura() {
-		char letraActual = 'A';
-		int numeroActual = 1;
+		String ultimoNumeroVenta = obtenerUltimoNumeroFactura();
 		
-		 // Combina la letra actual con el número actual
-        String numeroVenta = letraActual + String.format("%05d", numeroActual);
-
-        // Aumenta el número actual y, si es necesario, cambia la letra
-        if (numeroActual < 99999) {
-            numeroActual++;
-        } else {
-            numeroActual = 1;
-          
-            letraActual = (char) (letraActual + 1);
-        }
-
-        return numeroVenta;
+		if(ultimoNumeroVenta != null) {
+			char letraActual = ultimoNumeroVenta.charAt(0);;
+			int numeroActual = Integer.parseInt(ultimoNumeroVenta.substring(1));
+			
+			if(numeroActual < 999999) {
+				numeroActual++;
+			}
+			
+			else {
+				numeroActual = 1;
+				letraActual = (char) (letraActual + 1); // aumenta la letra en uno: A, B, C, D, E
+			}
+			String numeroVenta = letraActual + String.format("%06d", numeroActual);
+			
+			return numeroVenta;
+			
+		}
+		else {
+			return null;
+		}
+		
 	}
 	
 	public int registrarVenta(String numeroVenta, int idCliente, double totalVenta) {

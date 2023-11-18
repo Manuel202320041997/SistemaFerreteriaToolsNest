@@ -76,10 +76,13 @@ public class ProductoController {
 
 			if(producto != null){
 				int stock = producto.getStock();
-				double precio = producto.getPrecio_venta();
+				double precio_venta = producto.getPrecio_venta();
+				double precio_compra = producto.getPrecio_compra();
+				
 
 				producto.setStock(stock);
-				producto.setPrecio_compra(precio);
+				producto.setPrecio_venta(precio_venta);
+				producto.setPrecio_compra(precio_compra);
 				
 				return producto;
 			}
@@ -87,7 +90,7 @@ public class ProductoController {
 			else{
 				return null;
 			}
-	   }
+	   }	    
 	    
 	   public int obtenerIdProductoPorNombre(String nombreProducto){
 			return productoDaoImpl.obtenerIdProductoPorNombre(nombreProducto);
@@ -103,4 +106,20 @@ public class ProductoController {
 		    }
 		}
 	   
-}
+	   /*FUNCIONES PARA ACTUALIZACION DE PRECIOS*/
+	   public void actualizarPrecioCompraPorcentaje(double numeroActualizar, int marca) {
+		   productoDaoImpl.actualizarPrecioCompraPorcentaje(numeroActualizar, marca);
+	   }
+	   
+	   public void actualizarPrecioCompraSoles(double numeroActualizar, int marca) {
+		   productoDaoImpl.actualizarPrecioCompraSoles(numeroActualizar, marca);
+	   }
+	   
+	   public void actualizarPrecioVentaPorcentaje(double numeroActualizar, int marca) {
+		   productoDaoImpl.actualizarPrecioVentaPorcentaje(numeroActualizar, marca);		   
+	   }
+	   
+	   public void actualizarPrecioVentaSoles(double numeroActualizar, int marca) {
+		   productoDaoImpl.actualizarPrecioVentaSoles(numeroActualizar, marca);
+	   }
+}	
