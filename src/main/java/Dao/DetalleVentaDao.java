@@ -8,8 +8,14 @@ import Model.DetalleVenta;
 
 public interface DetalleVentaDao {
 	public List<DetalleVenta> listarDetalleVenta();
-
-	public DetalleVenta obtenerDetallePorNombre(String nombreVenta);
+	
+	public List<DetalleVenta> listarDetalleVentaPorNumeroFactura(int idFactura);
+	
+	public DetalleVenta obtenerDetallePorNumeroFactura(String numeroFactura);
+	
+	public List<DetalleVenta> listarDetalleVentaPorNumeroFactura(String numeroFactura);
 	
 	public void agregarDetalleVenta(DetalleVenta detalle);
+	
+	public DetalleVenta obtenerDetallePorNombre(String nombreVenta);
 }
