@@ -74,19 +74,6 @@ public class ClienteDaoImpl implements ClienteDao {
 		
 	}
 	
-	@Override
-	public void eliminarCliente(int idCliente) {
-		try{
-			String consulta = "UPDATE cliente SET estado = 0 WHERE id = ?";
-            PreparedStatement statement = conexion.prepareStatement(consulta);
-            statement.setInt(1,idCliente);
-            statement.executeUpdate();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-		
-	}
 
 	@Override
 	  public Cliente buscarClientePorId(int idCliente) {
@@ -118,8 +105,21 @@ public class ClienteDaoImpl implements ClienteDao {
 
         return null;
     }
+	public void editarCliente(Cliente cliente) {
+	    try (PreparedStatement statement = conexion.prepareStatement("UPDATE cliente SET dni = ?, nombres = ?, correo = ?, telefono = ? WHERE id = ?")) {
+	    	
+	        statement.setInt(1, cliente.getDni());
+	        statement.setString(2, cliente.getNombre());
+	        statement.setString(3, cliente.getCorreo());
+	        statement.setString(4, cliente.getTelefono());
+	        statement.setInt(5, cliente.getId());
 
-
+	        statement.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	@Override
 	public int obtenerIdClientePorNombre(String nombreCliente) {
 		int idCliente = -1; // Valor predeterminado en caso de no encontrar el producto
