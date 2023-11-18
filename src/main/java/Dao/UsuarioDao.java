@@ -15,4 +15,5 @@ public interface UsuarioDao {
     public Usuario buscarUsuarioPorDni(int dniUsuario);
     
     public boolean verificarSiExisteDni(int dniUsuario);
+    
 }

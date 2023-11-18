@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
-	private static final String url = "jdbc:mysql://localhost:3306/dbsistemaFerreteria";
+	private static final String url = "jdbc:mysql://localhost:3306/dbsistemaferreteria";
     private static final String usuario = "root";
     private static final String clave = "";
     
