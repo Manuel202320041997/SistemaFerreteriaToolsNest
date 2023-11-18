@@ -141,5 +141,11 @@ public class ClienteDaoImpl implements ClienteDao {
     return idCliente;
 	}
 
+	@Override
+	public boolean verificarSiExisteDni(int dniUsuario) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

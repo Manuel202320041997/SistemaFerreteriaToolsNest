@@ -47,18 +47,53 @@ public class VentaDaoImpl implements VentaDao {
 	}
 	@Override
 	public String obtenerUltimoNumeroFactura() {
-		// TODO Auto-generated method stub
-		return null;
+		String ultimoNumeroVenta = null;
+		
+		try {
+			String consulta = "SELECT numero_venta FROM venta ORDER BY id DESC LIMIT 1";
+			statement = conexion.prepareStatement(consulta);
+			ResultSet resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				ultimoNumeroVenta = resultSet.getString("numero_venta");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return ultimoNumeroVenta;
 	}
 	@Override
 	public void actualizarNumeroFactura(String nuevoNumero) {
-		// TODO Auto-generated method stub
+		try {
+			String consulta = "UPDATE venta SET numero_venta = ? WHERE id = (SELECT MAX(id) FROM venta)";
+			statement.setString(1, nuevoNumero);
+			
+			statement.executeQuery();			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 		
 	}
 	@Override
 	public int obtenerIdFacturaPorNumeroFactura(String numeroFactura) {
-		// TODO Auto-generated method stub
-		return 0;
+		int id = 0;
+		
+		try {
+			String consulta = "SELECT id FROM venta WHERE numero_venta = ?";
+			statement = conexion.prepareStatement(consulta);
+			ResultSet resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				id = resultSet.getInt("id");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 
 }
