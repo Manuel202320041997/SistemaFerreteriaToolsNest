@@ -22,8 +22,10 @@ public class DetalleVenta {
         this.precio_venta = precio_venta2;
     }
 
-	
+	public DetalleVenta() {
 
+    }
+	
 	public int getId() {
 		return id;
 	}

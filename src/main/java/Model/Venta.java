@@ -12,6 +12,7 @@ public class Venta {
 	private int id_modo_pago;
 	private int id_empleado;
 	private Date fechaVenta; // Corregido aquí
+	private boolean estado;
 	
 
 	/*
@@ -79,6 +80,14 @@ public class Venta {
 
 	public void setId_empleado(int id_empleado) {
 		this.id_empleado = id_empleado;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	public Date getFechaVenta() {
