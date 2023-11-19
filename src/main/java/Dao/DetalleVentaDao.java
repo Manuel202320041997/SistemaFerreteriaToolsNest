@@ -13,6 +13,8 @@ public interface DetalleVentaDao {
 	
 	public DetalleVenta obtenerDetallePorNumeroFactura(String numeroFactura);
 	
+	public List<DetalleVenta> listarDetalleVentaPorIdVenta(int idVenta);
+	
 	public List<DetalleVenta> listarDetalleVentaPorNumeroFactura(String numeroFactura);
 	
 	public void agregarDetalleVenta(DetalleVenta detalle);
