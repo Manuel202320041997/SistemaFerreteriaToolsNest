@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import Controller.VentaController;
+import Model.DetalleCompra;
 import Model.DetalleVenta;
 
 public class DetalleVentaDaoImpl implements DetalleVentaDao{
@@ -54,6 +55,33 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public List<DetalleVenta> listarDetalleVentaPorIdVenta(int idVenta) {
+		List<DetalleVenta> listaDetalle = new ArrayList<>();
+	    try {
+	        String consulta = "SELECT id_producto, cantidad, precio_venta FROM detalle_venta WHERE id_venta = ?";
+	        statement = conexion.prepareStatement(consulta);
+	        statement.setInt(1, idVenta);
+	        ResultSet resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            int idProducto = resultSet.getInt("id_producto"); // Corregir el nombre de la columna
+	            int cantidad = resultSet.getInt("cantidad");
+	            double precio_venta = resultSet.getDouble("precio_venta");
+
+	            DetalleVenta detalle = new DetalleVenta();
+	            detalle.setId_producto(idProducto);
+	            detalle.setCantidad(cantidad);
+	            detalle.setPrecio_venta(precio_venta);
+
+	            listaDetalle.add(detalle);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return listaDetalle;
+	}
+
 	
 
 	
@@ -107,15 +135,21 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao{
 	}
 
 	@Override
-	public void agregarDetalleVenta(DetalleVenta detalle) {
+	public void agregarDetalleVenta(DetalleVenta detalleventa) {
 		 try {
 		        String consulta = "INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_venta) VALUES (?, ?, ?, ?)";
 		        PreparedStatement statement = conexion.prepareStatement(consulta);
+		        
+		        System.out.println("Detalles de la compra a agregar:");
+		        System.out.println("ID Compra: " + detalleventa.getId_venta());
+		        System.out.println("ID Producto: " + detalleventa.getId_producto());
+		        System.out.println("Cantidad: " + detalleventa.getCantidad());
+		        System.out.println("Precio Compra: " + detalleventa.getPrecio_venta());
 
-		        statement.setInt(1, detalle.getId_venta());
-		        statement.setInt(2, detalle.getId_producto());
-		        statement.setInt(3, detalle.getCantidad());
-		        statement.setDouble(4, detalle.getPrecio_venta());
+		        statement.setInt(1, detalleventa.getId_venta());
+		        statement.setInt(2, detalleventa.getId_producto());
+		        statement.setInt(3, detalleventa.getCantidad());
+		        statement.setDouble(4, detalleventa.getPrecio_venta());
 
 		        statement.executeUpdate();
 		    } catch (SQLException e) {
