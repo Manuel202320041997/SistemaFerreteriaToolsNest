@@ -8,11 +8,11 @@ import Model.DetalleVenta;
 public class VentaController {
 	
 	
-	private VentaDaoImpl ventaDaoImpl = null;
+	private VentaDaoImpl ventaDao = null;
 	private DetalleVentaDaoImpl detalleVentaDaoImpl = null; 
 	
 	public VentaController(){
-		ventaDaoImpl = new VentaDaoImpl();
+		ventaDao = new VentaDaoImpl();
 		detalleVentaDaoImpl = new DetalleVentaDaoImpl(); 
 	}
 	
@@ -42,14 +42,17 @@ public class VentaController {
 		
 	}
 	
-	public int registrarVenta(String numeroVenta, int idCliente, double totalVenta) {
+	public int registrarVenta(String numeroVenta, int idCliente, double totalVenta, int idModoPago, int idEmpleado) {
 		
 		Venta venta = new Venta();
 		venta.setNumero_venta(numeroVenta);
 		venta.setId_cliente(idCliente);
 		venta.setTotal(totalVenta);
+		venta.setId_modo_pago(idModoPago);
+		venta.setId_empleado(idEmpleado);
 		
-		int idVenta = ventaDaoImpl.agregarVenta(venta);
+		
+		int idVenta = ventaDao.agregarVenta(venta);
 		return idVenta;
 	}
 	
@@ -66,16 +69,16 @@ public class VentaController {
 	}
 	
 	private String obtenerUltimoNumeroFactura() {
-	    return ventaDaoImpl.obtenerUltimoNumeroFactura();
+	    return ventaDao.obtenerUltimoNumeroFactura();
 	}
 
 	private void actualizarNumeroFactura(String nuevoNumeroFactura) {
-	    ventaDaoImpl.actualizarNumeroFactura(nuevoNumeroFactura);
+	    ventaDao.actualizarNumeroFactura(nuevoNumeroFactura);
 	}
 
 
 public int obtenerIdFacturaPorNumeroFactura(String numeroFactura) {
-		return ventaDaoImpl.obtenerIdFacturaPorNumeroFactura(numeroFactura);
+		return ventaDao.obtenerIdFacturaPorNumeroFactura(numeroFactura);
 	}
 	
 	
