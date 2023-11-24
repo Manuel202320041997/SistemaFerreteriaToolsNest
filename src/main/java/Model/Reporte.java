@@ -418,10 +418,85 @@ public static void ReporteEmpleado() {
 	//documento.close();
 }
 
+public static void ReporteVentas() {
 
+    Document document = new Document();
 
+    document.setPageSize(new Rectangle(830, document.getPageSize().getHeight()));
+
+    try {
+        String ruta = System.getProperty("user.home");
+        PdfWriter.getInstance(document, new FileOutputStream(ruta + "/Desktop/Reporte Ventas.pdf"));
+
+        Image header = Image.getInstance("src/main/resources/Img/banner1 ferreteria.png");
+        header.scaleToFit(840, 1000);
+        header.setAlignment(Chunk.ALIGN_CENTER);
+
+        Paragraph parrafo = new Paragraph();
+        parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+        parrafo.setFont(FontFactory.getFont("Arial", 13, Font.ITALIC, BaseColor.DARK_GRAY));
+        parrafo.add("Reporte generado por Ferreteria ToolsNest © F.T.N \n\n\n\n\n\n");
+        parrafo.setFont(FontFactory.getFont("Bahnschrift SemiBold", 28, Font.BOLD, BaseColor.BLACK));
+        parrafo.add("Reporte de Ventas \n\n\n");
+
+        document.open();
+
+        document.add(header);
+        document.add(parrafo);
+
+        float[] columnsWidths = {5, 12, 9, 7, 7, 7, 9, 5};
+
+        PdfPTable tabla = new PdfPTable(columnsWidths);
+        PdfPCell cell = new PdfPCell();
+        cell.setBorderWidth(2f);
+
+        tabla.addCell("ID");
+        tabla.addCell("Número Venta");
+        tabla.addCell("ID Cliente");
+        tabla.addCell("Total");
+        tabla.addCell("ID Modo Pago");
+        tabla.addCell("ID Empleado");
+        tabla.addCell("Fecha Venta");
+        tabla.addCell("Estado");
+
+        try {
+            Connection cn = Conexion.obtenerConexion();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT v.id, v.numero_venta, v.id_cliente, v.total, m.descripcion AS modo_pago, e.nombres AS empleado, " +
+                            "v.fecha_registro, CASE WHEN v.estado = 1 THEN 'ACTIVO' ELSE 'INACTIVO' END as estado_nombre " +
+                            "FROM venta v " +
+                            "JOIN modo_pago m ON v.id_modo_pago = m.id " +
+                            "JOIN empleado e ON v.id_empleado = e.id");
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                do {
+                    tabla.addCell(rs.getString(1));
+                    tabla.addCell(rs.getString(2));
+                    tabla.addCell(rs.getString(3));
+                    tabla.addCell(rs.getString(4));
+                    tabla.addCell(rs.getString(5)); // Nombre del modo_pago
+                    tabla.addCell(rs.getString(6)); // Nombre del empleado
+                    tabla.addCell(rs.getString(7));
+                    tabla.addCell(rs.getString(8));
+
+                } while (rs.next());
+                document.add(tabla);
+
+                JOptionPane.showMessageDialog(null, "Reporte de Ventas creado exitosamente");
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error en " + e);
+        }
+        document.close();
+
+    } catch (DocumentException | IOException e) {
+        System.out.println("Error en: " + e);
+    }
 }
 
 
 
-   
+}
+
