@@ -418,7 +418,7 @@ public static void ReporteEmpleado() {
 	//documento.close();
 }
 
-public static void ReporteVentas() {
+public static void ReporteVenta() {
 
     Document document = new Document();
 
@@ -444,7 +444,7 @@ public static void ReporteVentas() {
         document.add(header);
         document.add(parrafo);
 
-        float[] columnsWidths = {5, 12, 9, 7, 7, 7, 9, 5};
+        float[] columnsWidths = {5, 10, 10, 10, 20, 20, 15, 7};
 
         PdfPTable tabla = new PdfPTable(columnsWidths);
         PdfPCell cell = new PdfPCell();
@@ -454,8 +454,8 @@ public static void ReporteVentas() {
         tabla.addCell("Número Venta");
         tabla.addCell("ID Cliente");
         tabla.addCell("Total");
-        tabla.addCell("ID Modo Pago");
-        tabla.addCell("ID Empleado");
+        tabla.addCell("Modo Pago");
+        tabla.addCell("Empleado");
         tabla.addCell("Fecha Venta");
         tabla.addCell("Estado");
 
@@ -495,6 +495,82 @@ public static void ReporteVentas() {
         System.out.println("Error en: " + e);
     }
 }
+
+
+public static void ReporteCompra() {
+
+    Document document = new Document();
+
+    document.setPageSize(new Rectangle(830, document.getPageSize().getHeight()));
+
+    try {
+        String ruta = System.getProperty("user.home");
+        PdfWriter.getInstance(document, new FileOutputStream(ruta + "/Desktop/Reporte Compras.pdf"));
+
+        Image header = Image.getInstance("src/main/resources/Img/banner1 ferreteria.png");
+        header.scaleToFit(840, 1000);
+        header.setAlignment(Chunk.ALIGN_CENTER);
+
+        Paragraph parrafo = new Paragraph();
+        parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+        parrafo.setFont(FontFactory.getFont("Arial", 13, Font.ITALIC, BaseColor.DARK_GRAY));
+        parrafo.add("Reporte generado por Ferreteria ToolsNest © F.T.N \n\n\n\n\n\n");
+        parrafo.setFont(FontFactory.getFont("Bahnschrift SemiBold", 28, Font.BOLD, BaseColor.BLACK));
+        parrafo.add("Reporte de Compras \n\n\n");
+
+        document.open();
+
+        document.add(header);
+        document.add(parrafo);
+
+        float[] columnsWidths = {12, 9, 7, 7, 7, 9}; // Removed ID and Estado
+
+        PdfPTable tabla = new PdfPTable(columnsWidths);
+        PdfPCell cell = new PdfPCell();
+        cell.setBorderWidth(2f);
+
+        tabla.addCell("Fecha Compra"); // Moved Fecha Compra to the first column
+        tabla.addCell("Número Compra");
+        tabla.addCell("Proveedor");
+        tabla.addCell("Total");
+        tabla.addCell("Modo Pago");
+        tabla.addCell("Empleado");
+
+        try {
+            Connection cn = Conexion.obtenerConexion();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT c.fecha_registro, c.numero_compra, p.razon_social, c.total, m.descripcion AS modo_pago, e.nombres AS empleado " +
+                            "FROM compra c " +
+                            "JOIN proveedor p ON c.id_proveedor = p.id " +
+                            "JOIN modo_pago m ON c.id_modo_pago = m.id " +
+                            "JOIN empleado e ON c.id_empleado = e.id");
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                do {
+                    tabla.addCell(rs.getString(1));
+                    tabla.addCell(rs.getString(2));
+                    tabla.addCell(rs.getString(3)); // Razon Social del Proveedor
+                    tabla.addCell(rs.getString(4));
+                    tabla.addCell(rs.getString(5)); // Nombre del Modo Pago
+                    tabla.addCell(rs.getString(6)); // Nombre del Empleado
+
+                } while (rs.next());
+                document.add(tabla);
+
+                JOptionPane.showMessageDialog(null, "Reporte de Compras creado exitosamente");
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error en " + e);
+        }
+        document.close();
+
+    } catch (DocumentException | IOException e) {
+        System.out.println("Error en: " + e);
+    }
+}
+
 
 
 
